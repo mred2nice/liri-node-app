@@ -9,9 +9,15 @@ var textFile = "log.txt";
 //****************************************************************/
 switch (input) {
 	case "my-tweets":
+		fs.appendFile(textFile,'\r\n', function(err) {
+  			if (err) { console.log(err); }
+		});
 		tweets();
 		break;
 	case "movie-this":
+		fs.appendFile(textFile,'\r\n', function(err) {
+  			if (err) { console.log(err); }
+		});
 		//**********************************/
 		// if no movie passed use Mr.Nobody /
 		//**********************************/
@@ -22,6 +28,9 @@ switch (input) {
 		}
 		break;
 	case "spotify-this-song":
+		fs.appendFile(textFile,'\r\n', function(err) {
+  			if (err) { console.log(err); }
+		});
 		//***********************************************/
 		// if no song passed use The Sign by Ace of Base /
 		//***********************************************/
@@ -32,7 +41,10 @@ switch (input) {
 		}
 		break;
 	case "do-what-it-says":
-		var fs = require("fs");
+		fs.appendFile(textFile,'\r\n', function(err) {
+  			if (err) { console.log(err); }
+		});
+		//var fs = require("fs");
 		fs.readFile("random.txt", "utf8", function(error, data) {
 			if (error) {
 				return console.log(error);
@@ -161,7 +173,6 @@ function random(action,selection) {
 };
 
 function addLog(value) {
-	console.log("addLog: " + value)
 	fs.appendFile(textFile, value + '\r\n', function(err) {
   		if (err) { console.log(err); }
 	});
