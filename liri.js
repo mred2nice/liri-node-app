@@ -2,6 +2,8 @@
 // take in command line arguement /
 /*********************************/
 var input = process.argv[2];
+var fs = require("fs");
+var textFile = "log.txt";
 //****************************************************************/
 // switch statement used to determine action item entered by User /
 //****************************************************************/
@@ -64,6 +66,7 @@ function tweets() {
 	T.get('statuses/user_timeline', params, function(err,data,response) {
 		for (var i=0; i<data.length; i++) {
 	  		console.log(data[i].text);
+	  		addLog(data[i].text);
 	  	}
 	});
 };
@@ -97,6 +100,15 @@ function movie(movie) {
 	    console.log("Language of the movie: " + JSON.parse(body).Language);
 	    console.log("Plot of the movie: " + JSON.parse(body).Plot);
 	    console.log("Actors in the movie: " + JSON.parse(body).Actors);
+	    
+	    addLog("Title: " + JSON.parse(body).Title);
+	    addLog("Year the movie came out: " + JSON.parse(body).Year);
+	    addLog("IMDB Rating: " + JSON.parse(body).imdbRating);
+	    addLog("Rotten Tomatoes: " + JSON.parse(body).tomatoRating);
+	    addLog("Country where movie produced: " + JSON.parse(body).Country);
+	    addLog("Language of the movie: " + JSON.parse(body).Language);
+	    addLog("Plot of the movie: " + JSON.parse(body).Plot);
+	    addLog("Actors in the movie: " + JSON.parse(body).Actors);
 	  }
 	});
 }
@@ -125,12 +137,16 @@ function spotify(song) {
 		    console.log("Song name: " + songInfo.name)
 		    console.log("Album name: " + songInfo.album.name)
 		    console.log("Preview URL: " + songInfo.preview_url)
+
+		    addLog("Artist: " + songInfo.artists[0].name)
+		    addLog("Song name: " + songInfo.name)
+		    addLog("Album name: " + songInfo.album.name)
+		    addLog("Preview URL: " + songInfo.preview_url)
 	    };
   	});
 };
 
 function random(action,selection) {
-
 	switch (action) {
 		case "my-tweets":
 			tweets(selection);
@@ -142,5 +158,11 @@ function random(action,selection) {
 			spotify(selection);
 			break;
 	}
+};
 
+function addLog(value) {
+	console.log("addLog: " + value)
+	fs.appendFile(textFile, value + '\r\n', function(err) {
+  		if (err) { console.log(err); }
+	});
 };
